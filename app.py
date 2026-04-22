@@ -5,7 +5,7 @@ import pickle
 
 app = Flask(__name__)
 
-model = tf.keras.models.load_model('LSTM_Final_96.h5')
+model = tf.keras.models.load_model('LSTM_Final.h5')
 with open('tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
 
