@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake News Detector - Multi-Model</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 40px; text-align: center; }
+        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: inline-block; width: 90%; max-width: 800px; }
+        textarea { width: 100%; height: 150px; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box; }
+        .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .model-grid label { text-align: left; cursor: pointer; font-size: 14px; font-weight: 600; color: #444; }
+        button { background: #1a73e8; color: white; border: none; padding: 15px 50px; font-size: 18px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #1557b0; }
+        .result { margin-top: 30px; padding: 20px; border-radius: 10px; }
+        .fake { background: #fce8e6; color: #d93025; border: 1px solid #f5c2c7; }
+        .real { background: #e6f4ea; color: #1e8e3e; border: 1px solid #badbcc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake News Detection System</h1>
+        <form action="/predict" method="post">
+            <textarea name="news" placeholder="Enter news text here..." required></textarea>
+            
+            <div class="model-grid">
+                <label><input type="radio" name="model_choice" value="lstm_w2v" checked> LSTM + Word2Vec</label>
+                <label><input type="radio" name="model_choice" value="lr_tfidf"> Logistic Regression + TF-IDF</label>
+                <label><input type="radio" name="model_choice" value="lr_w2v"> Logistic Regression + Word2Vec</label>
+                <label><input type="radio" name="model_choice" value="lstm_tfidf"> LSTM + TF-IDF</label>
+            </div>
+
+            <button type="submit">Analyze News</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result {% if 'Fake' in prediction_text %}fake{% else %}real{% endif %}">
+                <h2>{{ prediction_text }}</h2>
+                <p>{{ confidence_text }}</p>
+                <small>Using: {{ model_used }}</small>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
