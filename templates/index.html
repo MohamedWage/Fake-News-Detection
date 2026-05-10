@@ -35,6 +35,9 @@
         {% if prediction_text %}
             <div class="result {% if 'Fake' in prediction_text %}fake{% else %}real{% endif %}">
                 <h2>{{ prediction_text }}</h2>
+                {% if reason %}
+                    <p><strong>Reason:</strong> {{ reason }}</p>
+                {% endif %}
                 <p>{{ confidence_text }}</p>
                 <small>Using: {{ model_used }}</small>
             </div>
